@@ -1,0 +1,480 @@
+===== Tue Jul 28 19:21:19 IST 2026 =====
+  Native Heap    25343    25256       64       70    26120    36764    28780     2163
+           Java Heap:    27280                          39284
+         Native Heap:    25256                          26120
+           TOTAL PSS:   116833            TOTAL RSS:   186716       TOTAL SWAP PSS:      505
+===== Tue Jul 28 19:21:23 IST 2026 =====
+  Native Heap    25419    25348       48       50    26200    36764    28749     2218
+           Java Heap:    24032                          42588
+         Native Heap:    25348                          26200
+           TOTAL PSS:   119252            TOTAL RSS:   190664       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:25 IST 2026 =====
+  Native Heap    25419    25348       48       50    26200    36764    28731     2236
+           Java Heap:    24020                          42576
+         Native Heap:    25348                          26200
+           TOTAL PSS:   119308            TOTAL RSS:   190768       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:26 IST 2026 =====
+  Native Heap    25419    25348       48       50    26200    36764    28731     2236
+           Java Heap:    24024                          42584
+         Native Heap:    25348                          26200
+           TOTAL PSS:   119350            TOTAL RSS:   190860       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:28 IST 2026 =====
+  Native Heap    25419    25348       48       50    26200    36764    28737     2231
+           Java Heap:    29152                          47712
+         Native Heap:    25348                          26200
+           TOTAL PSS:   124458            TOTAL RSS:   196008       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:30 IST 2026 =====
+  Native Heap    25419    25348       48       50    26200    36764    28735     2232
+           Java Heap:    24028                          42588
+         Native Heap:    25348                          26200
+           TOTAL PSS:   119440            TOTAL RSS:   191076       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:32 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28727     2240
+           Java Heap:    24028                          42588
+         Native Heap:    25344                          26196
+           TOTAL PSS:   119548            TOTAL RSS:   191300       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:34 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28727     2240
+           Java Heap:    24032                          42592
+         Native Heap:    25344                          26196
+           TOTAL PSS:   119546            TOTAL RSS:   191348       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:35 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28731     2236
+           Java Heap:    24032                          42592
+         Native Heap:    25344                          26196
+           TOTAL PSS:   119551            TOTAL RSS:   191360       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:38 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28727     2240
+           Java Heap:    29156                          47716
+         Native Heap:    25344                          26196
+           TOTAL PSS:   124718            TOTAL RSS:   196576       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:40 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28727     2240
+           Java Heap:    24036                          42596
+         Native Heap:    25344                          26196
+           TOTAL PSS:   119670            TOTAL RSS:   191572       TOTAL SWAP PSS:      226
+===== Tue Jul 28 19:21:42 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28732     2235
+           Java Heap:    29172                          47732
+         Native Heap:    25344                          26196
+           TOTAL PSS:   124866            TOTAL RSS:   196832       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:21:44 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28727     2240
+           Java Heap:    24048                          42608
+         Native Heap:    25344                          26196
+           TOTAL PSS:   119784            TOTAL RSS:   191796       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:21:46 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28727     2240
+           Java Heap:    24052                          42612
+         Native Heap:    25344                          26196
+           TOTAL PSS:   119837            TOTAL RSS:   191888       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:21:48 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28727     2240
+           Java Heap:    29176                          47736
+         Native Heap:    25344                          26196
+           TOTAL PSS:   125025            TOTAL RSS:   197152       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:21:52 IST 2026 =====
+  Native Heap    25419    25348       48       50    26200    36764    28723     2244
+           Java Heap:    29180                          47740
+         Native Heap:    25348                          26200
+           TOTAL PSS:   125147            TOTAL RSS:   197304       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:21:53 IST 2026 =====
+  Native Heap    25419    25348       48       50    26200    36764    28723     2244
+           Java Heap:    24060                          42620
+         Native Heap:    25348                          26200
+           TOTAL PSS:   120045            TOTAL RSS:   192220       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:21:55 IST 2026 =====
+  Native Heap    25427    25356       48       50    26208    36764    28723     2244
+           Java Heap:    24060                          42620
+         Native Heap:    25356                          26208
+           TOTAL PSS:   120077            TOTAL RSS:   192304       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:21:58 IST 2026 =====
+  Native Heap    25427    25356       48       50    26208    36764    28723     2244
+           Java Heap:    24060                          42620
+         Native Heap:    25356                          26208
+           TOTAL PSS:   120081            TOTAL RSS:   192316       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:00 IST 2026 =====
+  Native Heap    25431    25360       48       50    26212    36764    28723     2244
+           Java Heap:    24064                          42624
+         Native Heap:    25360                          26212
+           TOTAL PSS:   120126            TOTAL RSS:   192380       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:03 IST 2026 =====
+  Native Heap    25431    25360       48       50    26212    36764    28728     2239
+           Java Heap:    29188                          47748
+         Native Heap:    25360                          26212
+           TOTAL PSS:   125257            TOTAL RSS:   197520       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:06 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28786     2181
+           Java Heap:    29192                          47752
+         Native Heap:    25364                          26216
+           TOTAL PSS:   125307            TOTAL RSS:   197648       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:08 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28728     2240
+           Java Heap:    24072                          42632
+         Native Heap:    25364                          26216
+           TOTAL PSS:   120300            TOTAL RSS:   192764       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:10 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28723     2244
+           Java Heap:    24072                          42632
+         Native Heap:    25364                          26216
+           TOTAL PSS:   120323            TOTAL RSS:   192804       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:12 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28723     2244
+           Java Heap:    29200                          47760
+         Native Heap:    25364                          26216
+           TOTAL PSS:   125487            TOTAL RSS:   197988       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:14 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28723     2244
+           Java Heap:    24076                          42636
+         Native Heap:    25364                          26216
+           TOTAL PSS:   120382            TOTAL RSS:   192892       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:17 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28723     2244
+           Java Heap:    29204                          47764
+         Native Heap:    25364                          26216
+           TOTAL PSS:   125512            TOTAL RSS:   198036       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:20 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28729     2238
+           Java Heap:    29208                          47768
+         Native Heap:    25344                          26196
+           TOTAL PSS:   125523            TOTAL RSS:   198084       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:23 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28723     2244
+           Java Heap:    24084                          42644
+         Native Heap:    25344                          26196
+           TOTAL PSS:   120403            TOTAL RSS:   192968       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:26 IST 2026 =====
+  Native Heap    25415    25344       48       50    26196    36764    28723     2244
+           Java Heap:    29212                          47772
+         Native Heap:    25344                          26196
+           TOTAL PSS:   125541            TOTAL RSS:   198116       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:28 IST 2026 =====
+  Native Heap    25431    25360       48       50    26212    36764    28723     2244
+           Java Heap:    24088                          42648
+         Native Heap:    25360                          26212
+           TOTAL PSS:   120467            TOTAL RSS:   193064       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:29 IST 2026 =====
+  Native Heap    25431    25360       48       50    26212    36764    28723     2244
+           Java Heap:    24092                          42652
+         Native Heap:    25360                          26212
+           TOTAL PSS:   120479            TOTAL RSS:   193088       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:32 IST 2026 =====
+  Native Heap    25431    25360       48       50    26212    36764    28727     2240
+           Java Heap:    24092                          42652
+         Native Heap:    25360                          26212
+           TOTAL PSS:   120521            TOTAL RSS:   193180       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:34 IST 2026 =====
+  Native Heap    25431    25360       48       50    26212    36764    28723     2244
+           Java Heap:    29220                          47780
+         Native Heap:    25360                          26212
+           TOTAL PSS:   125650            TOTAL RSS:   198316       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:36 IST 2026 =====
+  Native Heap    25411    25340       48       50    26192    36764    28719     2248
+           Java Heap:    24096                          42656
+         Native Heap:    25340                          26192
+           TOTAL PSS:   120539            TOTAL RSS:   193256       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:38 IST 2026 =====
+  Native Heap    25411    25340       48       50    26192    36764    28752     2215
+           Java Heap:    24100                          42660
+         Native Heap:    25340                          26192
+           TOTAL PSS:   120584            TOTAL RSS:   193312       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:40 IST 2026 =====
+  Native Heap    25431    25360       48       50    26212    36764    28719     2248
+           Java Heap:    29224                          47784
+         Native Heap:    25360                          26212
+           TOTAL PSS:   125747            TOTAL RSS:   198512       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:42 IST 2026 =====
+  Native Heap    25431    25360       48       50    26212    36764    28719     2248
+           Java Heap:    24104                          42664
+         Native Heap:    25360                          26212
+           TOTAL PSS:   120664            TOTAL RSS:   193480       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:44 IST 2026 =====
+  Native Heap    25431    25360       48       50    26212    36764    28719     2248
+           Java Heap:    24104                          42664
+         Native Heap:    25360                          26212
+           TOTAL PSS:   120676            TOTAL RSS:   193500       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:46 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28719     2248
+           Java Heap:    29232                          47792
+         Native Heap:    25364                          26216
+           TOTAL PSS:   125855            TOTAL RSS:   198708       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:48 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28723     2244
+           Java Heap:    24108                          42668
+         Native Heap:    25364                          26216
+           TOTAL PSS:   120782            TOTAL RSS:   193692       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:49 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28719     2248
+           Java Heap:    24112                          42672
+         Native Heap:    25364                          26216
+           TOTAL PSS:   120827            TOTAL RSS:   193772       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:51 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28719     2248
+           Java Heap:    24112                          42672
+         Native Heap:    25364                          26216
+           TOTAL PSS:   120867            TOTAL RSS:   193840       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:53 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28719     2248
+           Java Heap:    29240                          47800
+         Native Heap:    25364                          26216
+           TOTAL PSS:   126011            TOTAL RSS:   199004       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:56 IST 2026 =====
+  Native Heap    25435    25364       48       50    26216    36764    28719     2248
+           Java Heap:    24116                          42676
+         Native Heap:    25364                          26216
+           TOTAL PSS:   120948            TOTAL RSS:   194024       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:57 IST 2026 =====
+  Native Heap    25427    25360       44       50    26208    36764    28715     2252
+           Java Heap:    24120                          42680
+         Native Heap:    25360                          26208
+           TOTAL PSS:   120990            TOTAL RSS:   194116       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:22:59 IST 2026 =====
+  Native Heap    25443    25376       44       50    26224    36764    28715     2282
+           Java Heap:    24120                          42680
+         Native Heap:    25376                          26224
+           TOTAL PSS:   121067            TOTAL RSS:   194232       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:01 IST 2026 =====
+  Native Heap    25447    25380       44       50    26228    36764    28715     2282
+           Java Heap:    29248                          47808
+         Native Heap:    25380                          26228
+           TOTAL PSS:   126271            TOTAL RSS:   199508       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:04 IST 2026 =====
+  Native Heap    25447    25380       44       50    26228    36764    28715     2282
+           Java Heap:    24124                          42684
+         Native Heap:    25380                          26228
+           TOTAL PSS:   121199            TOTAL RSS:   194476       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:05 IST 2026 =====
+  Native Heap    25447    25380       44       50    26228    36764    28715     2282
+           Java Heap:    24128                          42688
+         Native Heap:    25380                          26228
+           TOTAL PSS:   121265            TOTAL RSS:   194632       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:07 IST 2026 =====
+  Native Heap    25447    25380       44       50    26228    36764    28715     2282
+           Java Heap:    24128                          42688
+         Native Heap:    25380                          26228
+           TOTAL PSS:   121287            TOTAL RSS:   194676       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:09 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2289
+           Java Heap:    29252                          47812
+         Native Heap:    25384                          26232
+           TOTAL PSS:   126486            TOTAL RSS:   199904       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:10 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24132                          42692
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121370            TOTAL RSS:   194788       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:12 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24136                          42696
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121373            TOTAL RSS:   194788       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:13 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    19008                          37568
+         Native Heap:    25384                          26232
+           TOTAL PSS:   116242            TOTAL RSS:   189660       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:15 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2289
+           Java Heap:    29260                          47820
+         Native Heap:    25384                          26232
+           TOTAL PSS:   126499            TOTAL RSS:   199916       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:17 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24140                          42700
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121378            TOTAL RSS:   194796       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:19 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24140                          42700
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121374            TOTAL RSS:   194792       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:20 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24144                          42704
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121383            TOTAL RSS:   194800       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:22 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2289
+           Java Heap:    24144                          42704
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121379            TOTAL RSS:   194796       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:24 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24144                          42704
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121383            TOTAL RSS:   194800       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:25 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24148                          42708
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121383            TOTAL RSS:   194800       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:27 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24148                          42708
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121389            TOTAL RSS:   194804       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:28 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2289
+           Java Heap:    24148                          42708
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121385            TOTAL RSS:   194800       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:29 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24152                          42712
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121390            TOTAL RSS:   194808       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:31 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24152                          42712
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121386            TOTAL RSS:   194804       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:32 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24156                          42716
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121395            TOTAL RSS:   194812       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:34 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2289
+           Java Heap:    24156                          42716
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121391            TOTAL RSS:   194808       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:35 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24156                          42716
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121397            TOTAL RSS:   194812       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:37 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24160                          42720
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121397            TOTAL RSS:   194812       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:39 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24160                          42720
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121399            TOTAL RSS:   194816       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:40 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2289
+           Java Heap:    24164                          42724
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121401            TOTAL RSS:   194816       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:42 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24164                          42724
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121402            TOTAL RSS:   194820       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:43 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24164                          42724
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121398            TOTAL RSS:   194816       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:44 IST 2026 =====
+  Native Heap    25451    25384       44       50    26232    36764    28714     2288
+           Java Heap:    24168                          42728
+         Native Heap:    25384                          26232
+           TOTAL PSS:   121409            TOTAL RSS:   194824       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:46 IST 2026 =====
+  Native Heap    25455    25388       44       50    26232    36764    28714     2289
+           Java Heap:    24168                          42728
+         Native Heap:    25388                          26232
+           TOTAL PSS:   121406            TOTAL RSS:   194820       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:47 IST 2026 =====
+  Native Heap    25455    25388       44       50    26232    36764    28714     2288
+           Java Heap:    24168                          42728
+         Native Heap:    25388                          26232
+           TOTAL PSS:   121411            TOTAL RSS:   194824       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:49 IST 2026 =====
+  Native Heap    25455    25388       44       50    26232    36764    28714     2288
+           Java Heap:    24172                          42732
+         Native Heap:    25388                          26232
+           TOTAL PSS:   121411            TOTAL RSS:   194824       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:50 IST 2026 =====
+  Native Heap    25455    25388       44       50    26232    36764    28714     2288
+           Java Heap:    24172                          42732
+         Native Heap:    25388                          26232
+           TOTAL PSS:   121414            TOTAL RSS:   194828       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:52 IST 2026 =====
+  Native Heap    25455    25388       44       50    26232    36764    28714     2289
+           Java Heap:    24176                          42736
+         Native Heap:    25388                          26232
+           TOTAL PSS:   121414            TOTAL RSS:   194828       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:53 IST 2026 =====
+  Native Heap    25455    25388       44       50    26232    36764    28714     2288
+           Java Heap:    24176                          42736
+         Native Heap:    25388                          26232
+           TOTAL PSS:   121418            TOTAL RSS:   194832       TOTAL SWAP PSS:      225
+===== Tue Jul 28 19:23:55 IST 2026 =====
+  Native Heap    26518    26424       72       46    27308    41276    34521     1752
+           Java Heap:    21480                          40344
+         Native Heap:    26424                          27308
+           TOTAL PSS:   129104            TOTAL RSS:   207368       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:23:57 IST 2026 =====
+  Native Heap    18414    18316       76       46    19204    23932    16294     3173
+           Java Heap:    15728                          34596
+         Native Heap:    18316                          19204
+           TOTAL PSS:   114623            TOTAL RSS:   195192       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:23:58 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16286     3180
+           Java Heap:    15684                          34552
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103666            TOTAL RSS:   178756       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:23:59 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15688                          34556
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103670            TOTAL RSS:   178760       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:00 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15688                          34556
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103673            TOTAL RSS:   178760       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:01 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15684                          34552
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103666            TOTAL RSS:   178756       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:03 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15684                          34552
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103669            TOTAL RSS:   178756       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:04 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15684                          34552
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103666            TOTAL RSS:   178756       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:05 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15688                          34556
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103670            TOTAL RSS:   178760       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:06 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15688                          34556
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103670            TOTAL RSS:   178760       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:07 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15684                          34552
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103666            TOTAL RSS:   178756       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:08 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15688                          34556
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103673            TOTAL RSS:   178760       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:09 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15688                          34556
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103670            TOTAL RSS:   178760       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:11 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15688                          34556
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103670            TOTAL RSS:   178760       TOTAL SWAP PSS:      208
+===== Tue Jul 28 19:24:12 IST 2026 =====
+  Native Heap    18390    18292       76       46    19180    23932    16285     3181
+           Java Heap:    15688                          34556
+         Native Heap:    18292                          19180
+           TOTAL PSS:   103673            TOTAL RSS:   178760       TOTAL SWAP PSS:      208
