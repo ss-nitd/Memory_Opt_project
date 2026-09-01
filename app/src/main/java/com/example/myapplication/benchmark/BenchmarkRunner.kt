@@ -38,7 +38,7 @@ class BenchmarkRunner(
             if (stopRequested) break
             val iteration = completedIterations + 1
             val result =
-                embeddingEngine.runDummyInference()
+                embeddingEngine.runInference()
             retainedEmbeddings.add(
                 result.embedding
             )

@@ -16,9 +16,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.runtime.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
@@ -129,7 +131,7 @@ class MainActivity : ComponentActivity() {
                 availRamMbState.longValue = snapshot.availableBytes / 1024 / 1024
 
                 // Thermals
-                thermalHeadroomState.floatValue = thermalMonitor.getThermalStatus(aiPressureRunner.engineCount())
+                thermalHeadroomState.floatValue = thermalMonitor.getThermalHeadroom()
                 delay(1000)
             }
         }
@@ -142,10 +144,12 @@ class MainActivity : ComponentActivity() {
                     aiPressureRunner.addEngine()
                 }
                 if (aiPressureRunner.engineCount() > 0) {
-                    latestInferenceTimeMs.longValue = aiPressureRunner.runInferenceOnAll()
+                    latestInferenceTimeMs.longValue = withContext(Dispatchers.Default) {
+                        aiPressureRunner.runInferenceOnAll()
+                    }
                 }
                 engineCountState.intValue = aiPressureRunner.engineCount()
-                delay(2500)
+                delay(250)
             }
         }
     }
@@ -191,13 +195,17 @@ fun AiMemoryDashboard(
     val ramImprovementPct = if (useMmap && totalAppMem > 0) (ramSaved.toFloat() / (totalAppMem + ramSaved) * 100).toInt() else 0
     val mmapSubtitle = if (useMmap && engineCount > 0) "⬇️ $ramImprovementPct% App RAM (${ramSaved}MB saved)" else "Virtual Memory (Slide 12)"
 
-    val liteRtSubtitle = if (useLiteRtNpu) "⚡ 82% Faster execution (15ms vs 85ms)" else "Target NPU Silicon (Slide 15)"
+    val liteRtSubtitle = if (useLiteRtNpu) {
+        "NPU delegate unavailable; fixed CPU workload remains active"
+    } else {
+        "Fixed-work CPU inference"
+    }
 
     // --- NEW: Dynamic Logcat Text ---
     val terminalLog = if (useLiteRtNpu) {
-        "LiteRT: Target set to Accelerator.NPU"
+        "LiteRT NPU requested; delegate not configured"
     } else {
-        "LiteRT: Target set to CPU (4 Threads)"
+        "Fixed-work CPU inference active"
     }
 
     Column(modifier = modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -218,7 +226,10 @@ fun AiMemoryDashboard(
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             MetricBox("Inference", "${latestInferenceTimeMs} ms")
             MetricBox("Avail RAM", "${availRamMb} MB")
-            MetricBox("Thermal", String.format("%.2f", thermalHeadroom))
+            MetricBox(
+                "Thermal",
+                if (thermalHeadroom.isNaN()) "N/A" else String.format("%.2f", thermalHeadroom)
+            )
         }
 
         Spacer(modifier = Modifier.height(12.dp))

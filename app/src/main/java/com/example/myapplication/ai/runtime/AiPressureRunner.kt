@@ -11,6 +11,7 @@ class AiPressureRunner(context: Context) {
     private var useMmap = false
     private var useLiteRtNpu = false
 
+    @Synchronized
     fun updateArchitectureConfig(direct: Boolean, mmap: Boolean, liteRtNpu: Boolean) {
         useDirectBuffers = direct
         useMmap = mmap
@@ -23,18 +24,24 @@ class AiPressureRunner(context: Context) {
         Runtime.getRuntime().gc()
     }
 
+    @Synchronized
     fun addEngine() = engines.add(EmbeddingEngine(appContext, useLiteRtNpu, useDirectBuffers, useMmap))
 
+    @Synchronized
     fun runInferenceOnAll(): Long {
         var lastTimeMs = 0L
-        engines.forEach { lastTimeMs = it.runDummyInference().timeMs }
+        engines.forEach { lastTimeMs = it.runInference().timeMs }
         return lastTimeMs
     }
 
+    @Synchronized
     fun engineCount(): Int = engines.size
+
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    @Synchronized
     fun releaseOneEngine() { if (engines.isNotEmpty()) engines.removeLast().close() }
 
+    @Synchronized
     fun releaseAllEngines() {
         engines.forEach { it.close() }
         engines.clear()

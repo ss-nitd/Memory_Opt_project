@@ -40,10 +40,18 @@ class EmbeddingEngine(
     private var modelPageChecksum = 0
     @Volatile
     private var tensorPageChecksum = 0
+    private val cpuInferenceWorkload = CpuInferenceWorkload()
 
     init {
         // SLIDE 15: LiteRT Initialization Target
-        Log.i("EmbeddingEngine", if (useLiteRtNpu) "LiteRT: Target set to Accelerator.NPU" else "LiteRT: Target set to CPU")
+        Log.i(
+            "EmbeddingEngine",
+            if (useLiteRtNpu) {
+                "LiteRT NPU requested, but no delegate is configured; using CPU workload"
+            } else {
+                "Running fixed-work CPU inference workload"
+            }
+        )
         loadModel(context, useMmap)
     }
 
@@ -68,15 +76,14 @@ class EmbeddingEngine(
         }
     }
 
-    fun runDummyInference(): InferenceResult {
+    fun runInference(): InferenceResult {
         val start = SystemClock.elapsedRealtime()
         touchModelPages()
         touchTensorPages()
-        Thread.sleep(if (useLiteRtNpu) 15L else 85L) // Simulate NPU speedup
+        val embedding = cpuInferenceWorkload.run()
         val end = SystemClock.elapsedRealtime()
 
-        // Return a dummy float array so BenchmarkRunner compiles and retains memory
-        return InferenceResult(timeMs = end - start, embedding = FloatArray(384))
+        return InferenceResult(timeMs = end - start, embedding = embedding)
     }
 
     /**
