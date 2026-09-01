@@ -4,8 +4,9 @@ import android.content.Context
 import android.os.SystemClock
 
 class NaiveEmbeddingEngine(context: Context) {
-    // Load the model only once
-    private val interpreter = ModelLoader(context).loadInterpreter()
+    // Retain the mapped model buffer together with the interpreter.
+    private val interpreterHandle = ModelLoader(context).loadInterpreterHandle()
+    private val interpreter = interpreterHandle.interpreter
 
     // Allocate all buffers only once
     private val inputIds = Array(1) { IntArray(128) { 0 } }
