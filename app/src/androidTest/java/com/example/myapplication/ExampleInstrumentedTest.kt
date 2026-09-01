@@ -4,6 +4,7 @@ import android.os.PowerManager
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.myapplication.runtime.EmbeddingEngine
+import com.example.myapplication.runtime.SemanticSearchEngine
 import com.example.myapplication.runtime.ThermalMonitor
 
 import org.junit.Test
@@ -59,5 +60,70 @@ class ExampleInstrumentedTest {
         assertTrue(
             thermal.status in PowerManager.THERMAL_STATUS_NONE..PowerManager.THERMAL_STATUS_SHUTDOWN
         )
+    }
+
+    @Test
+    fun semanticSearchFindsRelevantPassageWithBundledModel() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val engine = SemanticSearchEngine(
+            context = context,
+            engineCount = 2,
+            useMmap = true,
+            useSharedMemory = true
+        )
+
+        try {
+            val result = engine.search(
+                document = """
+                    Android memory mapping loads model pages from a file only when they are needed.
+
+                    Fresh pasta is prepared by mixing flour with eggs before rolling the dough.
+                """.trimIndent(),
+                query = "How can Android load model pages on demand?"
+            )
+
+            assertTrue(result.bestPassage.startsWith("Android memory mapping"))
+            assertEquals(2, result.chunksScanned)
+            assertEquals(384, result.embeddingDimensions)
+            assertEquals(2, result.enginePoolSize)
+            assertEquals(2, result.enginesUsed)
+            assertTrue(result.mappedModelBytes > result.uniqueMappedModelBytes)
+            assertEquals(0L, result.copiedModelBytes)
+            assertTrue(result.sharedTensorBytes > 0L)
+            assertEquals(0L, result.heapTensorBytes)
+        } finally {
+            engine.close()
+        }
+    }
+
+    @Test
+    fun semanticSearchSupportsCopiedModelAndHeapTensorIo() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val engine = SemanticSearchEngine(
+            context = context,
+            engineCount = 1,
+            useMmap = false,
+            useSharedMemory = false
+        )
+
+        try {
+            val storage = engine.runtimeSnapshot()
+            val result = engine.search(
+                document = "Android maps model files to share read-only pages.",
+                query = "How are model files shared?"
+            )
+
+            assertEquals(1, storage.engineCount)
+            assertTrue(storage.heapModelBytes > 0L)
+            assertEquals(0L, storage.mappedModelBytes)
+            assertTrue(storage.heapTensorBytes > 0L)
+            assertEquals(0L, storage.sharedTensorBytes)
+            assertEquals(1, result.enginePoolSize)
+            assertEquals(1, result.enginesUsed)
+            assertTrue(result.copiedModelBytes > 0L)
+            assertTrue(result.heapTensorBytes > 0L)
+        } finally {
+            engine.close()
+        }
     }
 }
