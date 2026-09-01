@@ -2,6 +2,8 @@ package com.example.myapplication
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Debug
+import android.os.PowerManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
 
@@ -32,18 +35,19 @@ class MainActivity : ComponentActivity() {
     private var criticalCleanupPerformed = false
 
     // Telemetry State
-    private var engineCountState = mutableIntStateOf(0)
-    private var javaHeapMbState = mutableLongStateOf(0L)
-    private var nativeHeapMbState = mutableLongStateOf(0L)
-    private var availRamMbState = mutableLongStateOf(0L)
-    private var thermalHeadroomState = mutableFloatStateOf(1.0f)
+    private var engineRuntimeState = mutableStateOf(EngineRuntimeSnapshot())
+    private var javaHeapBytesState = mutableLongStateOf(0L)
+    private var appPssBytesState = mutableLongStateOf(0L)
+    private var systemMemoryState = mutableStateOf<MemorySnapshot?>(null)
+    private var thermalState = mutableStateOf(
+        ThermalSnapshot(Float.NaN, PowerManager.THERMAL_STATUS_NONE)
+    )
     private var allowNewEnginesState = mutableStateOf(true)
-    private var latestInferenceTimeMs = mutableLongStateOf(0L)
+    private var latestBatchTimeNanos = mutableLongStateOf(0L)
 
     // Architecture Toggles
     private var useDirectBuffers = mutableStateOf(false)
     private var useMmap = mutableStateOf(false)
-    private var useLiteRtNpu = mutableStateOf(false)
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,37 +70,33 @@ class MainActivity : ComponentActivity() {
                     AiMemoryDashboard(
                         modifier = Modifier.padding(innerPadding),
                         pressure = pressure,
-                        engineCount = engineCountState.intValue,
-                        javaHeapMb = javaHeapMbState.longValue,
-                        nativeHeapMb = nativeHeapMbState.longValue,
-                        availRamMb = availRamMbState.longValue,
-                        thermalHeadroom = thermalHeadroomState.floatValue,
+                        engineRuntime = engineRuntimeState.value,
+                        javaHeapBytes = javaHeapBytesState.longValue,
+                        appPssBytes = appPssBytesState.longValue,
+                        systemMemory = systemMemoryState.value,
+                        thermal = thermalState.value,
                         allowNewEngines = allowNewEnginesState.value,
-                        latestInferenceTimeMs = latestInferenceTimeMs.longValue,
+                        latestBatchTimeNanos = latestBatchTimeNanos.longValue,
                         useDirectBuffers = useDirectBuffers.value,
                         useMmap = useMmap.value,
-                        useLiteRtNpu = useLiteRtNpu.value,
-                        onToggleDirectBuffers = { updateConfig(it, useMmap.value, useLiteRtNpu.value) },
-                        onToggleMmap = { updateConfig(useDirectBuffers.value, it, useLiteRtNpu.value) },
-                        onToggleLiteRt = { updateConfig(useDirectBuffers.value, useMmap.value, it) }
+                        onToggleDirectBuffers = { updateConfig(it, useMmap.value) },
+                        onToggleMmap = { updateConfig(useDirectBuffers.value, it) }
                     )
                 }
             }
         }
     }
 
-    private fun updateConfig(direct: Boolean, mmap: Boolean, liteRt: Boolean) {
+    private fun updateConfig(direct: Boolean, mmap: Boolean) {
         useDirectBuffers.value = direct
         useMmap.value = mmap
-        useLiteRtNpu.value = liteRt
 
         allowNewEngines = true
         allowNewEnginesState.value = true
         criticalCleanupPerformed = false
-        memoryPressureMonitor.reset()
 
-        aiPressureRunner.updateArchitectureConfig(direct, mmap, liteRt)
-        engineCountState.intValue = aiPressureRunner.engineCount()
+        aiPressureRunner.updateArchitectureConfig(direct, mmap)
+        engineRuntimeState.value = aiPressureRunner.runtimeSnapshot()
     }
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
@@ -108,9 +108,8 @@ class MainActivity : ComponentActivity() {
                     allowNewEnginesState.value = false
                     if (!criticalCleanupPerformed && aiPressureRunner.engineCount() > 0) {
                         criticalCleanupPerformed = true
-                        //aiPressureRunner.releaseOneEngine()
                         aiPressureRunner.releaseAllEngines()
-                        engineCountState.intValue = aiPressureRunner.engineCount()
+                        engineRuntimeState.value = aiPressureRunner.runtimeSnapshot()
                     }
                 }
             }
@@ -121,18 +120,17 @@ class MainActivity : ComponentActivity() {
     private fun startTelemetrySampling() {
         lifecycleScope.launch {
             while (isActive) {
-                // Heaps
                 val runtime = Runtime.getRuntime()
-                javaHeapMbState.longValue = (runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024
-                nativeHeapMbState.longValue = android.os.Debug.getNativeHeapAllocatedSize() / 1024 / 1024
+                javaHeapBytesState.longValue = runtime.totalMemory() - runtime.freeMemory()
 
-                // Physical RAM
-                val snapshot = memoryPressureMonitor.refreshSystemMemory()
-                availRamMbState.longValue = snapshot.availableBytes / 1024 / 1024
+                val appMemoryInfo = Debug.MemoryInfo()
+                Debug.getMemoryInfo(appMemoryInfo)
+                appPssBytesState.longValue = appMemoryInfo.totalPss.toLong() * BYTES_PER_KIBIBYTE
 
-                // Thermals
-                thermalHeadroomState.floatValue = thermalMonitor.getThermalHeadroom()
-                delay(1000)
+                systemMemoryState.value = memoryPressureMonitor.refreshSystemMemory()
+                thermalState.value = thermalMonitor.snapshot()
+
+                delay(TELEMETRY_INTERVAL_MS)
             }
         }
     }
@@ -140,18 +138,25 @@ class MainActivity : ComponentActivity() {
     private fun startAiExperiment() {
         lifecycleScope.launch {
             while (isActive) {
-                if (allowNewEngines && aiPressureRunner.engineCount() < 12) {
+                if (allowNewEngines && aiPressureRunner.engineCount() < MAX_ENGINE_COUNT) {
                     aiPressureRunner.addEngine()
                 }
                 if (aiPressureRunner.engineCount() > 0) {
-                    latestInferenceTimeMs.longValue = withContext(Dispatchers.Default) {
-                        aiPressureRunner.runInferenceOnAll()
+                    latestBatchTimeNanos.longValue = withContext(Dispatchers.Default) {
+                        aiPressureRunner.runInferenceOnAllNanos()
                     }
                 }
-                engineCountState.intValue = aiPressureRunner.engineCount()
-                delay(250)
+                engineRuntimeState.value = aiPressureRunner.runtimeSnapshot()
+                delay(WORKLOAD_INTERVAL_MS)
             }
         }
+    }
+
+    private companion object {
+        const val MAX_ENGINE_COUNT = 12
+        const val TELEMETRY_INTERVAL_MS = 1_000L
+        const val WORKLOAD_INTERVAL_MS = 250L
+        const val BYTES_PER_KIBIBYTE = 1_024L
     }
 }
 
@@ -159,53 +164,57 @@ class MainActivity : ComponentActivity() {
 fun AiMemoryDashboard(
     modifier: Modifier = Modifier,
     pressure: MemoryPressure,
-    engineCount: Int,
-    javaHeapMb: Long,
-    nativeHeapMb: Long,
-    availRamMb: Long,
-    thermalHeadroom: Float,
+    engineRuntime: EngineRuntimeSnapshot,
+    javaHeapBytes: Long,
+    appPssBytes: Long,
+    systemMemory: MemorySnapshot?,
+    thermal: ThermalSnapshot,
     allowNewEngines: Boolean,
-    latestInferenceTimeMs: Long,
+    latestBatchTimeNanos: Long,
     useDirectBuffers: Boolean,
     useMmap: Boolean,
-    useLiteRtNpu: Boolean,
     onToggleDirectBuffers: (Boolean) -> Unit,
-    onToggleMmap: (Boolean) -> Unit,
-    onToggleLiteRt: (Boolean) -> Unit
+    onToggleMmap: (Boolean) -> Unit
 ) {
     val (statusColor, statusText) = when (pressure) {
         MemoryPressure.NORMAL -> Color(0xFF4CAF50) to "NORMAL"
         MemoryPressure.LOW -> Color(0xFFFF9800) to "LOW"
         MemoryPressure.CRITICAL -> Color(0xFFF44336) to "CRITICAL"
-        MemoryPressure.MODERATE -> TODO()
+        MemoryPressure.MODERATE -> Color(0xFFFFC107) to "MODERATE"
     }
 
-    // Dynamic Improvement Calculations
-    val totalAppMem = javaHeapMb + nativeHeapMb
-
-    val nativeTensorMb = if (useDirectBuffers) engineCount * 4 else 0
-    val directSubtitle = if (useDirectBuffers && engineCount > 0) {
-        "$nativeTensorMb MiB native-addressable tensor storage"
-    } else {
-        "Keep tensor storage outside the managed heap"
+    val directSubtitle = when {
+        engineRuntime.sharedTensorBytes > 0 -> {
+            "${formatBytes(engineRuntime.sharedTensorBytes)} shared-memory mapping"
+        }
+        engineRuntime.heapTensorBytes > 0 -> {
+            "${formatBytes(engineRuntime.heapTensorBytes)} managed-heap storage"
+        }
+        else -> "No tensor storage allocated"
     }
 
-    // Change the multiplier from 10 to 6
-    val ramSaved = if (useMmap) engineCount * 6 else 0
-    val ramImprovementPct = if (useMmap && totalAppMem > 0) (ramSaved.toFloat() / (totalAppMem + ramSaved) * 100).toInt() else 0
-    val mmapSubtitle = if (useMmap && engineCount > 0) "⬇️ $ramImprovementPct% App RAM (${ramSaved}MB saved)" else "Virtual Memory (Slide 12)"
-
-    val liteRtSubtitle = if (useLiteRtNpu) {
-        "NPU delegate unavailable; fixed CPU workload remains active"
-    } else {
-        "Fixed-work CPU inference"
+    val mmapSubtitle = when {
+        engineRuntime.mappedModelBytes > 0 -> {
+            "${formatBytes(engineRuntime.mappedModelBytes)} file-backed mapping"
+        }
+        engineRuntime.heapModelBytes > 0 -> {
+            "${formatBytes(engineRuntime.heapModelBytes)} managed-heap model"
+        }
+        else -> "No model storage allocated"
     }
 
-    // --- NEW: Dynamic Logcat Text ---
-    val terminalLog = if (useLiteRtNpu) {
-        "LiteRT NPU requested; delegate not configured"
-    } else {
-        "Fixed-work CPU inference active"
+    val thermalStatus = thermalStatusLabel(thermal.status)
+    val workloadStatus = when {
+        !allowNewEngines -> "Critical memory callback: allocations halted"
+        engineRuntime.engineCount == 0 -> "Starting CPU workload"
+        else -> "CPU workload active: ${engineRuntime.engineCount} engines"
+    }
+    val runtimeDetails = buildString {
+        append("Thermal status: $thermalStatus")
+        systemMemory?.let { memory ->
+            append("\nSystem available: ${formatBytes(memory.availableBytes)} / ${formatBytes(memory.totalBytes)}")
+            append("\nSystem low-memory threshold: ${formatBytes(memory.thresholdBytes)}")
+        }
     }
 
     Column(modifier = modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -217,39 +226,42 @@ fun AiMemoryDashboard(
 
         Spacer(modifier = Modifier.height(16.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            MetricBox("Engines", "$engineCount")
-            MetricBox("Java Heap", "${javaHeapMb} MB")
-            MetricBox("Native Heap", "${nativeHeapMb} MB")
+            MetricBox("Engines", "${engineRuntime.engineCount}")
+            MetricBox("Java Heap", formatBytes(javaHeapBytes))
+            MetricBox("App PSS", formatBytes(appPssBytes))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            MetricBox("Inference", "${latestInferenceTimeMs} ms")
-            MetricBox("Avail RAM", "${availRamMb} MB")
+            MetricBox("Batch", formatDuration(latestBatchTimeNanos))
+            MetricBox("Avail RAM", systemMemory?.let { formatBytes(it.availableBytes) } ?: "N/A")
             MetricBox(
-                "Thermal",
-                if (thermalHeadroom.isNaN()) "N/A" else String.format("%.2f", thermalHeadroom)
+                "Headroom 10s",
+                if (thermal.headroom.isNaN()) "N/A" else String.format(
+                    Locale.getDefault(),
+                    "%.3f",
+                    thermal.headroom
+                )
             )
         }
 
         Spacer(modifier = Modifier.height(12.dp))
-        if (!allowNewEngines) {
-            Text("⚠️ LMKD INTERVENTION: ALLOCATIONS HALTED", color = Color.Red, fontWeight = FontWeight.Bold)
-        } else {
-            Text("Scaling AI workloads...", color = Color.Gray)
-        }
+        Text(
+            workloadStatus,
+            color = if (allowNewEngines) Color.Gray else Color.Red,
+            fontWeight = if (allowNewEngines) FontWeight.Normal else FontWeight.Bold
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // --- NEW: Live Terminal UI ---
         Surface(
-            color = Color(0xFF1E1E1E), // Dark terminal background
+            color = Color(0xFF1E1E1E),
             shape = MaterialTheme.shapes.small,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
         ) {
             Text(
-                text = ">_ $terminalLog",
-                color = Color(0xFF00FF00), // Hacker green text
+                text = runtimeDetails,
+                color = Color(0xFF00FF00),
                 fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
@@ -263,9 +275,8 @@ fun AiMemoryDashboard(
 
         Text("Architecture Controls", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
 
-        ToggleRow("Zero-Copy Buffers", directSubtitle, useDirectBuffers, onToggleDirectBuffers)
-        ToggleRow("Demand Paging (mmap)", mmapSubtitle, useMmap, onToggleMmap)
-        ToggleRow("LiteRT Accelerator", liteRtSubtitle, useLiteRtNpu, onToggleLiteRt)
+        ToggleRow("Shared Tensor Memory", directSubtitle, useDirectBuffers, onToggleDirectBuffers)
+        ToggleRow("File-backed Model Mapping", mmapSubtitle, useMmap, onToggleMmap)
     }
 }
 
@@ -283,10 +294,32 @@ fun ToggleRow(title: String, subtitle: String, checked: Boolean, onCheckedChange
         Column {
             Text(title, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium)
 
-            // Apply a green accent color to the subtitle when the toggle is ON to make the savings pop!
             val subtitleColor = if (checked) Color(0xFF2E7D32) else Color.Gray
             Text(subtitle, style = MaterialTheme.typography.bodySmall, color = subtitleColor, fontWeight = if (checked) FontWeight.Bold else FontWeight.Normal)
         }
         Switch(checked = checked, onCheckedChange = onCheckedChange)
     }
+}
+
+private fun formatBytes(bytes: Long): String = String.format(
+    Locale.getDefault(),
+    "%.1f MiB",
+    bytes.toDouble() / (1_024.0 * 1_024.0)
+)
+
+private fun formatDuration(nanos: Long): String = if (nanos == 0L) {
+    "N/A"
+} else {
+    String.format(Locale.getDefault(), "%.1f ms", nanos / 1_000_000.0)
+}
+
+private fun thermalStatusLabel(status: Int): String = when (status) {
+    PowerManager.THERMAL_STATUS_NONE -> "NONE"
+    PowerManager.THERMAL_STATUS_LIGHT -> "LIGHT"
+    PowerManager.THERMAL_STATUS_MODERATE -> "MODERATE"
+    PowerManager.THERMAL_STATUS_SEVERE -> "SEVERE"
+    PowerManager.THERMAL_STATUS_CRITICAL -> "CRITICAL"
+    PowerManager.THERMAL_STATUS_EMERGENCY -> "EMERGENCY"
+    PowerManager.THERMAL_STATUS_SHUTDOWN -> "SHUTDOWN"
+    else -> "UNKNOWN ($status)"
 }

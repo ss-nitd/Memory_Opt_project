@@ -9,7 +9,10 @@ class ThermalMonitor(context: Context) {
     private val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
 
     @RequiresApi(Build.VERSION_CODES.R)
-    fun getThermalHeadroom(): Float = powerManager.getThermalHeadroom(FORECAST_SECONDS)
+    fun snapshot(): ThermalSnapshot = ThermalSnapshot(
+        headroom = powerManager.getThermalHeadroom(FORECAST_SECONDS),
+        status = powerManager.currentThermalStatus
+    )
 
     private companion object {
         const val FORECAST_SECONDS = 10

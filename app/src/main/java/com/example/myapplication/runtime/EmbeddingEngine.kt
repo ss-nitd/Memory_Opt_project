@@ -13,7 +13,6 @@ import java.nio.channels.FileChannel
 
 class EmbeddingEngine(
     context: Context,
-    private val useLiteRtNpu: Boolean,
     private val useDirectBuffers: Boolean,
     private val useMmap: Boolean
 ) {
@@ -43,15 +42,7 @@ class EmbeddingEngine(
     private val cpuInferenceWorkload = CpuInferenceWorkload()
 
     init {
-        // SLIDE 15: LiteRT Initialization Target
-        Log.i(
-            "EmbeddingEngine",
-            if (useLiteRtNpu) {
-                "LiteRT NPU requested, but no delegate is configured; using CPU workload"
-            } else {
-                "Running fixed-work CPU inference workload"
-            }
-        )
+        Log.i("EmbeddingEngine", "Running fixed-work CPU inference workload")
         loadModel(context, useMmap)
     }
 
@@ -62,7 +53,6 @@ class EmbeddingEngine(
         }
 
         if (mmap) {
-            // SLIDE 12: Virtual Memory Map (RAM stays stable)
             randomAccessFile = RandomAccessFile(modelFile, "r")
             fileChannel = randomAccessFile?.channel
             mappedModelBuffer = fileChannel?.map(
@@ -71,10 +61,16 @@ class EmbeddingEngine(
                 fileChannel!!.size()
             )
         } else {
-            // Legacy Heap Load (Eats Physical RAM & Java Heap)
             legacyModelBuffer = modelFile.readBytes()
         }
     }
+
+    fun storageSnapshot(): EngineStorageSnapshot = EngineStorageSnapshot(
+        heapTensorBytes = jvmFootprint?.size?.toLong() ?: 0,
+        sharedTensorBytes = nativeFootprint?.capacity()?.toLong() ?: 0,
+        heapModelBytes = legacyModelBuffer?.size?.toLong() ?: 0,
+        mappedModelBytes = mappedModelBuffer?.capacity()?.toLong() ?: 0
+    )
 
     fun runInference(): InferenceResult {
         val start = SystemClock.elapsedRealtime()
