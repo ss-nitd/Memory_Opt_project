@@ -16,6 +16,11 @@ class AiPressureRunner(context: Context) {
         useMmap = mmap
         useLiteRtNpu = liteRtNpu
         releaseAllEngines()
+
+        // Configuration switches are an explicit A/B benchmark boundary. Ask
+        // ART to reclaim the previous engines before telemetry records the new
+        // configuration; production inference loops should not force GC.
+        Runtime.getRuntime().gc()
     }
 
     fun addEngine() = engines.add(EmbeddingEngine(appContext, useLiteRtNpu, useDirectBuffers, useMmap))

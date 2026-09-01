@@ -179,10 +179,12 @@ fun AiMemoryDashboard(
     // Dynamic Improvement Calculations
     val totalAppMem = javaHeapMb + nativeHeapMb
 
-    // Change the multiplier from 8 to 4
-    val javaHeapSaved = if (useDirectBuffers) engineCount * 4 else 0
-    val heapImprovementPct = if (useDirectBuffers && totalAppMem > 0) (javaHeapSaved.toFloat() / (totalAppMem + javaHeapSaved) * 100).toInt() else 0
-    val directSubtitle = if (useDirectBuffers && engineCount > 0) "⬇️ $heapImprovementPct% Java Heap (${javaHeapSaved}MB avoided)" else "Bypass JVM GC (Slide 11)"
+    val nativeTensorMb = if (useDirectBuffers) engineCount * 4 else 0
+    val directSubtitle = if (useDirectBuffers && engineCount > 0) {
+        "$nativeTensorMb MiB native-addressable tensor storage"
+    } else {
+        "Keep tensor storage outside the managed heap"
+    }
 
     // Change the multiplier from 10 to 6
     val ramSaved = if (useMmap) engineCount * 6 else 0
