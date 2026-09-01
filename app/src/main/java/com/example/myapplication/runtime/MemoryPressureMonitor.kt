@@ -14,11 +14,6 @@ class MemoryPressureMonitor(
     context: Context
 ) : ComponentCallbacks2 {
 
-    companion object {
-        private const val LOW_AVAILABLE_RATIO = 0.15
-        private const val CRITICAL_AVAILABLE_RATIO = 0.08
-    }
-
     private val applicationContext = context.applicationContext
     private val activityManager = applicationContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 
@@ -38,13 +33,12 @@ class MemoryPressureMonitor(
         val memoryInfo = ActivityManager.MemoryInfo()
         activityManager.getMemoryInfo(memoryInfo)
 
-        val availableRatio = memoryInfo.availMem.toDouble() / memoryInfo.totalMem.toDouble()
-
-        val detectedPressure = when {
-            memoryInfo.lowMemory || availableRatio <= CRITICAL_AVAILABLE_RATIO -> MemoryPressure.CRITICAL
-            availableRatio <= LOW_AVAILABLE_RATIO -> MemoryPressure.LOW
-            else -> MemoryPressure.NORMAL
+        val detectedPressure = if (memoryInfo.lowMemory) {
+            MemoryPressure.LOW
+        } else {
+            MemoryPressure.NORMAL
         }
+        updatePressure(detectedPressure)
 
         return MemorySnapshot(
             availableBytes = memoryInfo.availMem,
@@ -56,13 +50,17 @@ class MemoryPressureMonitor(
     }
 
     override fun onTrimMemory(level: Int) {
-        val mappedPressure = when {
-            level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL -> MemoryPressure.CRITICAL
-            level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> MemoryPressure.LOW
-            level >= ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> MemoryPressure.CRITICAL
-            level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE -> MemoryPressure.LOW
-            level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> MemoryPressure.LOW
-            level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> MemoryPressure.MODERATE
+        val mappedPressure = when (level) {
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
+            ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> MemoryPressure.CRITICAL
+
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
+            ComponentCallbacks2.TRIM_MEMORY_MODERATE -> MemoryPressure.LOW
+
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE,
+            ComponentCallbacks2.TRIM_MEMORY_BACKGROUND,
+            ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> MemoryPressure.MODERATE
+
             else -> MemoryPressure.NORMAL
         }
 
@@ -80,7 +78,4 @@ class MemoryPressureMonitor(
         _pressure.value = pressure
     }
 
-    fun reset() {
-        _pressure.value = MemoryPressure.NORMAL
-    }
 }
